@@ -1,5 +1,5 @@
 from flask import Flask, render_template_string
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import subprocess
 
@@ -8,16 +8,20 @@ app = Flask(__name__)
 @app.route('/htop')
 def htop():
     # Get the top command output
-    top_output = subprocess.check_output(['top', '-b', '-n', '1']).decode('utf-8')
+    try:
+        top_output = subprocess.check_output(['top', '-b', '-n', '1']).decode('utf-8')
+    except Exception as e:
+        top_output = str(e)
+
     # Format the server time to IST
-    ist_time = datetime.now().astimezone().replace(tzinfo=None) + timedelta(hours=5, minutes=30)
+    ist_time = datetime.utcnow() + timedelta(hours=5, minutes=30)
     
     # Create HTML output
     html_content = f'''
     <html>
         <body>
             <h1>System Information</h1>
-            <p>Name: Your Full Name</p>
+            <p>Name: Ayush Udayakumar Nair</p>
             <p>Username: {os.getlogin()}</p>
             <p>Server Time in IST: {ist_time.strftime('%Y-%m-%d %H:%M:%S')}</p>
             <h2>Top Output:</h2>
