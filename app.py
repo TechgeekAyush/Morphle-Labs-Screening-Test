@@ -22,7 +22,7 @@ def htop():
         <body>
             <h1>System Information</h1>
             <p>Name: Ayush Udayakumar Nair</p>
-            <p>Username: {os.getlogin()}</p>
+            <p>Username: {os.environ.get('USER') or os.environ.get('USERNAME')}</p>
             <p>Server Time in IST: {ist_time.strftime('%Y-%m-%d %H:%M:%S')}</p>
             <h2>Top Output:</h2>
             <pre>{top_output}</pre>
